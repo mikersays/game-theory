@@ -1,0 +1,201 @@
+/* ============================================================
+   EQUILIBRIA — page-specific styles
+   Loaded AFTER main.css. Reuses tokens; never overrides palette.
+   ============================================================ */
+
+/* ---------- A. Displayed math ---------- */
+.math {
+  font-family: var(--font-mono);
+  font-size: var(--fs-base);
+  background: var(--surface);
+  border-left: 3px double var(--accent-2);
+  padding: var(--s-4) var(--s-5);
+  margin: var(--s-5) 0;
+  max-width: 38em;
+  color: var(--ink);
+  line-height: 1.7;
+  font-variant-numeric: tabular-nums;
+  white-space: pre-line;
+}
+.math em { font-family: var(--font-display); font-style: italic; color: var(--accent); padding: 0 0.05em; }
+.math .op { color: var(--muted); padding: 0 0.25em; }
+
+/* ---------- B. Best-response annotations on payoff matrices ---------- */
+/* Adds little BR markers when a cell carries data attrs added in HTML. */
+.payoff.br-annotated .p-cell { position: relative; }
+.payoff.br-annotated .br-row,
+.payoff.br-annotated .br-col {
+  position: absolute;
+  font-family: var(--font-mono);
+  font-size: 9px;
+  letter-spacing: 0.05em;
+  line-height: 1;
+  padding: 2px 3px;
+}
+.payoff.br-annotated .br-row {
+  bottom: 4px; left: 4px;
+  color: var(--accent);
+  border: 1px solid var(--accent);
+}
+.payoff.br-annotated .br-col {
+  top: 4px; left: 4px;
+  color: var(--accent-2);
+  border: 1px solid var(--accent-2);
+}
+
+/* ---------- C. Elimination walkthrough (3-step grid) ---------- */
+.elim-walk {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: var(--s-5);
+  margin: var(--s-6) 0;
+}
+.elim-step {
+  background: var(--surface);
+  border: 1px solid var(--rule);
+  padding: var(--s-4);
+  position: relative;
+}
+.elim-step::before {
+  content: "";
+  position: absolute; inset: 4px;
+  border: 1px solid var(--rule);
+  pointer-events: none;
+}
+.elim-step .step-num {
+  display: block;
+  font-family: var(--font-mono);
+  font-size: var(--fs-xs);
+  color: var(--accent);
+  letter-spacing: 0.12em;
+  margin-bottom: var(--s-2);
+}
+.elim-step h5 {
+  font-family: var(--font-display);
+  font-style: italic;
+  font-size: var(--fs-base);
+  margin: 0 0 var(--s-3);
+}
+.elim-step pre {
+  font-family: var(--font-mono);
+  font-size: var(--fs-xs);
+  line-height: 1.5;
+  margin: 0;
+  padding: var(--s-3);
+  background: var(--bg);
+  border: 1px solid var(--rule);
+  color: var(--ink);
+  overflow-x: auto;
+}
+.elim-step pre .strike {
+  color: var(--muted);
+  text-decoration: line-through;
+  text-decoration-color: var(--accent);
+  text-decoration-thickness: 1.5px;
+}
+.elim-step pre .keep { color: var(--accent); font-weight: 600; }
+.elim-step pre .ne { background: var(--highlight); padding: 0 0.2em; color: var(--ink); }
+.elim-step p {
+  font-size: var(--fs-sm);
+  line-height: 1.5;
+  color: var(--ink-soft);
+  margin: var(--s-3) 0 0;
+  text-indent: 0;
+}
+
+/* ---------- D. Hierarchy diagram (concentric set inclusion) ---------- */
+.hierarchy-fig svg { width: 100%; height: auto; max-width: 560px; margin-inline: auto; }
+
+/* ---------- E. Reading list ---------- */
+.reading-list {
+  margin: var(--s-5) 0;
+  padding: var(--s-5);
+  background: var(--surface);
+  border: 1px solid var(--rule);
+  max-width: 44em;
+}
+.reading-list h4 {
+  font-family: var(--font-display);
+  font-style: italic;
+  margin: 0 0 var(--s-3);
+  font-size: var(--fs-lg);
+}
+.reading-list ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  counter-reset: ref;
+}
+.reading-list li {
+  counter-increment: ref;
+  padding: var(--s-3) 0;
+  border-top: 1px solid var(--rule);
+  font-size: var(--fs-sm);
+  line-height: 1.55;
+  color: var(--ink-soft);
+  display: grid;
+  grid-template-columns: 2.5em 1fr;
+  gap: var(--s-3);
+}
+.reading-list li:first-child { border-top: 0; }
+.reading-list li::before {
+  content: "[" counter(ref, decimal-leading-zero) "]";
+  font-family: var(--font-mono);
+  font-size: var(--fs-xs);
+  color: var(--accent);
+  letter-spacing: 0.05em;
+}
+.reading-list li cite { font-style: italic; }
+
+/* ---------- F. Two-up CTA grid ---------- */
+.cta-pair {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: var(--s-5);
+  margin-top: var(--s-6);
+}
+.cta-pair .cta-block {
+  border: 1px solid var(--ink);
+  padding: var(--s-5);
+  background: var(--surface);
+  position: relative;
+}
+.cta-pair .cta-block::before {
+  content: "";
+  position: absolute; inset: 5px;
+  border: 1px solid var(--rule);
+  pointer-events: none;
+}
+.cta-pair .cta-block h4 {
+  font-family: var(--font-display);
+  font-style: italic;
+  font-size: var(--fs-xl);
+  margin: 0 0 var(--s-3);
+}
+.cta-pair .cta-block p {
+  font-size: var(--fs-sm);
+  text-indent: 0;
+  color: var(--ink-soft);
+  margin: 0 0 var(--s-4);
+}
+
+/* ---------- G. Indifference / equation alignment helper ---------- */
+.eq-label {
+  font-family: var(--font-label);
+  font-size: var(--fs-xs);
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  color: var(--muted);
+  margin-bottom: var(--s-2);
+  display: block;
+}
+
+/* ---------- H. Game tree figure — bounded width ---------- */
+.tree-fig svg { width: 100%; height: auto; max-width: 640px; margin-inline: auto; }
+
+/* ---------- I. Responsive ---------- */
+@media (max-width: 720px) {
+  .cta-pair { grid-template-columns: 1fr; }
+  .math { font-size: var(--fs-sm); padding: var(--s-3) var(--s-4); }
+  .elim-step pre { font-size: 0.7rem; }
+}

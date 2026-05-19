@@ -1,0 +1,602 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Foundations &mdash; Game Theory &amp; Co.</title>
+  <meta name="description" content="The four ingredients of a game, how to represent one, and six classic two-player games every strategist should know cold." />
+  <meta name="theme-color" content="#f4ecd8" />
+
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght,SOFT@0,9..144,300..700,0..100;1,9..144,300..700,0..100&family=Source+Serif+4:ital,opsz,wght@0,8..60,300..700;1,8..60,300..700&family=JetBrains+Mono:wght@400;600&family=IBM+Plex+Sans:wght@400;500;600&display=swap" rel="stylesheet" />
+
+  <link rel="stylesheet" href="assets/css/main.css" />
+  <link rel="stylesheet" href="assets/css/foundations.css" />
+  <script defer src="assets/js/main.js"></script>
+</head>
+<body>
+
+<!-- ============================================================
+     MASTHEAD
+     ============================================================ -->
+<header class="masthead" role="banner">
+  <div class="wrap masthead-inner">
+    <a href="index.html" class="brand" aria-label="Game Theory &amp; Co. &mdash; home">
+      Game Theory <span class="amp">&amp;</span> Co.
+      <small>Vol. I &middot; A Field Guide</small>
+    </a>
+    <nav class="primary" aria-label="Primary">
+      <a href="index.html">Home</a>
+      <a href="foundations.html">Foundations</a>
+      <a href="equilibria.html">Equilibria</a>
+      <a href="applications.html">Applications</a>
+      <a href="simulator.html">Simulator</a>
+    </nav>
+    <div class="issue-meta" aria-hidden="true">
+      Est. MMXXVI &middot; <span data-year>2026</span>
+    </div>
+    <button class="nav-toggle" aria-expanded="false" aria-controls="primary-nav">Menu</button>
+  </div>
+</header>
+
+<main id="main">
+
+  <!-- ============================================================
+       HERO
+       ============================================================ -->
+  <section class="hero wrap" aria-labelledby="hero-title">
+    <div class="hero-grid">
+      <span class="eyebrow">No. 02 &middot; Foundations</span>
+      <h1 id="hero-title" class="hero-title reveal in">
+        Four ingredients, <span class="accent">six small games</span>, one stubborn idea<span class="ornament">.</span>
+      </h1>
+      <div class="hero-rule" aria-hidden="true"></div>
+      <p class="lede reveal in">
+        Before equilibrium concepts, before mechanism design, before any of the modern apparatus, there is a deceptively simple anatomy: <em>players</em>, <em>strategies</em>, <em>payoffs</em>, <em>information</em>. Get the anatomy right and the math has somewhere to land. Get it wrong and the most elegant theorem in the world will give you a confidently wrong answer.
+      </p>
+      <div class="hero-meta">
+        <span>Reading time &mdash; <strong>~14 minutes</strong></span>
+        <span>Prerequisites &mdash; <strong>None</strong></span>
+        <span>Next &mdash; <strong>Equilibria</strong></span>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============================================================
+       I. WHAT GAME THEORY STUDIES
+       ============================================================ -->
+  <section class="wrap" aria-labelledby="sec-1">
+    <div class="section-head">
+      <div>
+        <span class="eyebrow">What it studies</span>
+        <h2 id="sec-1">Strategic interdependence.</h2>
+      </div>
+      <span class="roman" aria-hidden="true">I.</span>
+    </div>
+
+    <div class="wrap-narrow" style="margin-inline:0;">
+      <p class="dropcap">
+        Game theory is the study of decisions whose <em>best answer depends on what someone else, also reasoning, will decide to do</em>. That is the whole subject in one line. Solitaire is not a game in this sense; chess is. A weather forecast is not strategic; a price war is. The moment another mind enters the picture &mdash; a mind that can anticipate yours, and knows you can anticipate it &mdash; the problem stops being about optimization and starts being about <em>mutual</em> optimization, which is harder and stranger.
+      </p>
+      <p>
+        Consider four small scenes. Two airlines on a route, each deciding whether to undercut the other &mdash; cut and you steal a few passengers, but if both cut you both bleed. Two roommates and a thermostat: one likes the apartment at sixty-five, the other at seventy-two, and the dial is winched up and down all winter long. A pawn sacrifice in the Sicilian: a piece given freely now because the position three moves later is worth more than the piece. A vaccine rollout: each person free-riding on the immunity of others is rational individually and ruinous collectively.
+      </p>
+      <p>
+        Different costumes, one shape. In each case the actor is reasoning <em>about</em> another actor's reasoning <em>about</em> the actor's reasoning. The recursion terrifies first-year students. It also yields a remarkable amount of structure.
+      </p>
+
+      <aside class="sidenote">
+        <span class="marker">&para;</span> The watershed is conventionally placed in 1944, when <strong>John von Neumann</strong> and <strong>Oskar Morgenstern</strong> published <em>Theory of Games and Economic Behavior</em> at Princeton. The book is 600 pages and very nearly unreadable in places, but it accomplished something durable: it took strategy out of the realm of metaphor and gave it axioms, notation, and proofs. Everything afterward &mdash; Nash's existence theorem, Schelling's focal points, Selten's subgame perfection, Harsanyi's incomplete information &mdash; is a renovation on that foundation.
+      </aside>
+    </div>
+  </section>
+
+  <!-- ============================================================
+       II. THE FOUR INGREDIENTS
+       ============================================================ -->
+  <section class="wrap" aria-labelledby="sec-2">
+    <div class="section-head">
+      <div>
+        <span class="eyebrow">The anatomy</span>
+        <h2 id="sec-2">The four ingredients of a game.</h2>
+      </div>
+      <span class="roman" aria-hidden="true">II.</span>
+    </div>
+
+    <p style="max-width:42em;">
+      Any model that calls itself a game has to specify four things. Get any one of them wrong and the analysis is off, sometimes catastrophically. The discipline of game theory is partly the discipline of writing these four down honestly.
+    </p>
+
+    <div class="ingredients">
+      <article class="ingredient">
+        <span class="ingredient-num">i.</span>
+        <h3>Players</h3>
+        <p>The agents whose decisions matter. They can be people, firms, governments, species, or algorithms. The only requirement is that each has its own goals and is capable of choosing. <em>Nature</em> &mdash; the coin flip, the disease draw &mdash; often plays as an extra, non-strategic player.</p>
+      </article>
+
+      <article class="ingredient">
+        <span class="ingredient-num">ii.</span>
+        <h3>Strategies</h3>
+        <p>What each player can <em>do</em>. A <em>pure strategy</em> is a complete plan of action: &ldquo;at every choice point I might face, here is what I will pick.&rdquo; A <em>mixed strategy</em> is a probability distribution over pure strategies &mdash; flip a coin and play Cooperate seventy percent of the time. Mixed strategies look strange until you realize a tennis player choosing between a forehand and a backhand return is doing exactly that.</p>
+      </article>
+
+      <article class="ingredient">
+        <span class="ingredient-num">iii.</span>
+        <h3>Payoffs</h3>
+        <p>Each player's preferences over outcomes, expressed as a number called <em>utility</em>. Utility is not money. It is whatever the player is trying to maximize &mdash; status, calories, expected children, dollars-net-of-prison-time, the warm feeling of having done right. Payoffs are <em>ordinal</em> at minimum and, for mixed strategies, must be <em>cardinal</em>: a player must be indifferent between a sure 2 and a coin flip over 0 and 4.</p>
+      </article>
+
+      <article class="ingredient">
+        <span class="ingredient-num">iv.</span>
+        <h3>Information</h3>
+        <p>Who knows what, and when. A game has <em>perfect information</em> if every player sees every previous move (chess); <em>imperfect</em> if some moves are hidden (poker). It has <em>complete</em> information if the payoffs and types of every player are common knowledge; <em>incomplete</em> if not (a sealed-bid auction). These distinctions are not pedantic. They reorder what is rational to do.</p>
+      </article>
+    </div>
+
+    <aside class="sidenote" style="margin-top:var(--s-6);">
+      <span class="marker">&para;</span> A small but useful caution: in everyday speech &ldquo;strategy&rdquo; means &ldquo;a clever idea.&rdquo; In game theory it means &ldquo;a complete contingent plan,&rdquo; which is much fussier. A grandmaster's <em>strategy</em>, formally, would specify her response to every position she could ever reach, including ones she will never see. The thing she actually plays at the board is a <em>realized path</em> through that plan.
+    </aside>
+  </section>
+
+  <!-- ============================================================
+       III. REPRESENTING GAMES
+       ============================================================ -->
+  <section class="wrap" aria-labelledby="sec-3">
+    <div class="section-head">
+      <div>
+        <span class="eyebrow">Two notations</span>
+        <h2 id="sec-3">Representing games.</h2>
+      </div>
+      <span class="roman" aria-hidden="true">III.</span>
+    </div>
+
+    <div class="wrap-narrow" style="margin-inline:0;">
+      <p>
+        Two diagrams do almost all the work. The first &mdash; the <em>normal form</em>, or payoff matrix &mdash; is a table of outcomes. The second &mdash; the <em>extensive form</em>, or game tree &mdash; is a diagram of choices over time. They are convertible, but each makes some things obvious that the other hides.
+      </p>
+    </div>
+
+    <h3 style="margin-top:var(--s-7);">Normal form: the payoff matrix.</h3>
+    <p style="max-width:42em;">
+      Each row is a strategy for one player, each column a strategy for the other. The cell at the intersection lists what each player gets if those two strategies are chosen. By convention the row player's payoff is written first &mdash; in this guide, in <span style="color:var(--accent);font-weight:600;">oxblood</span> &mdash; and the column player's second, in <span style="color:var(--accent-2);font-weight:600;">blue</span>. The cell (Down, Right) means &ldquo;the row player chose Down, the column player chose Right; row gets the first number, column gets the second.&rdquo;
+    </p>
+
+    <div class="payoff" data-payoff='{
+      "title":"A generic 2x2 normal form.",
+      "rowLabel":"Row","colLabel":"Column",
+      "rowStrats":["Up","Down"],
+      "colStrats":["Left","Right"],
+      "cells":[[[2,1],[0,3]],[[3,0],[1,2]]],
+      "caption":"Read each cell as (row payoff, column payoff). Read down a column to find the row player’s best response to that column. Read across a row to find the column player’s best response."
+    }'></div>
+
+    <h3 style="margin-top:var(--s-7);">Extensive form: the game tree.</h3>
+    <p style="max-width:42em;">
+      Some games unfold in steps, and order matters. The extensive form draws the game as a tree: each <em>decision node</em> is a moment where a player must choose, each <em>branch</em> is a possible action, and each <em>leaf</em> is a terminal outcome with payoffs attached. The figure below shows a two-stage game in which Player 1 chooses first; Player 2, observing the choice, then chooses; payoffs are realized at the leaves.
+    </p>
+
+    <figure class="fig fig-tree">
+      <svg viewBox="0 0 720 360" role="img" aria-label="Two-stage extensive-form game tree" xmlns="http://www.w3.org/2000/svg">
+        <defs>
+          <pattern id="tree-paper" width="120" height="120" patternUnits="userSpaceOnUse">
+            <rect width="120" height="120" fill="transparent"/>
+            <circle cx="20" cy="20" r="0.5" fill="rgba(26,20,16,0.08)"/>
+            <circle cx="80" cy="60" r="0.5" fill="rgba(26,20,16,0.08)"/>
+            <circle cx="40" cy="100" r="0.5" fill="rgba(26,20,16,0.08)"/>
+          </pattern>
+        </defs>
+        <rect width="720" height="360" fill="url(#tree-paper)"/>
+
+        <!-- Decorative frame ticks -->
+        <g stroke="#c9b894" stroke-width="1" fill="none">
+          <line x1="12" y1="12" x2="36" y2="12"/>
+          <line x1="12" y1="12" x2="12" y2="36"/>
+          <line x1="708" y1="12" x2="684" y2="12"/>
+          <line x1="708" y1="12" x2="708" y2="36"/>
+          <line x1="12" y1="348" x2="36" y2="348"/>
+          <line x1="12" y1="348" x2="12" y2="324"/>
+          <line x1="708" y1="348" x2="684" y2="348"/>
+          <line x1="708" y1="348" x2="708" y2="324"/>
+        </g>
+
+        <!-- Branches: Player 1 (oxblood) -->
+        <g stroke="#7a1f1f" stroke-width="1.6" fill="none" stroke-linecap="round">
+          <path d="M 360 70 L 200 170" />
+          <path d="M 360 70 L 520 170" />
+        </g>
+        <!-- Branches: Player 2 (blue) -->
+        <g stroke="#1f3a5f" stroke-width="1.4" fill="none" stroke-linecap="round">
+          <path d="M 200 170 L 110 280" />
+          <path d="M 200 170 L 290 280" />
+          <path d="M 520 170 L 430 280" />
+          <path d="M 520 170 L 610 280" />
+        </g>
+
+        <!-- Action labels -->
+        <g font-family="JetBrains Mono, monospace" font-size="11" fill="#3b302a">
+          <text x="260" y="118" text-anchor="middle">L</text>
+          <text x="460" y="118" text-anchor="middle">R</text>
+          <text x="140" y="228" text-anchor="middle">l</text>
+          <text x="258" y="228" text-anchor="middle">r</text>
+          <text x="462" y="228" text-anchor="middle">l</text>
+          <text x="580" y="228" text-anchor="middle">r</text>
+        </g>
+
+        <!-- Root node (Player 1) -->
+        <g>
+          <circle cx="360" cy="70" r="14" fill="#7a1f1f" stroke="#1a1410" stroke-width="1.5"/>
+          <text x="360" y="74" text-anchor="middle" font-family="JetBrains Mono, monospace" font-size="11" fill="#f4ecd8" font-weight="600">1</text>
+          <text x="360" y="42" text-anchor="middle" font-family="Fraunces, serif" font-style="italic" font-size="13" fill="#1a1410">Player 1 chooses</text>
+        </g>
+
+        <!-- Player 2 nodes -->
+        <g>
+          <circle cx="200" cy="170" r="12" fill="#1f3a5f" stroke="#1a1410" stroke-width="1.5"/>
+          <text x="200" y="174" text-anchor="middle" font-family="JetBrains Mono, monospace" font-size="10" fill="#f4ecd8" font-weight="600">2</text>
+          <circle cx="520" cy="170" r="12" fill="#1f3a5f" stroke="#1a1410" stroke-width="1.5"/>
+          <text x="520" y="174" text-anchor="middle" font-family="JetBrains Mono, monospace" font-size="10" fill="#f4ecd8" font-weight="600">2</text>
+        </g>
+
+        <!-- Information-set hint (P2 observes; so the two P2 nodes are distinct, not joined) -->
+        <text x="360" y="172" text-anchor="middle" font-family="Fraunces, serif" font-style="italic" font-size="12" fill="#7a6b5d">Player 2 observes &amp; chooses</text>
+
+        <!-- Leaves -->
+        <g font-family="JetBrains Mono, monospace" font-size="12">
+          <g>
+            <rect x="76" y="290" width="68" height="40" fill="#fbf6e7" stroke="#1a1410" stroke-width="1"/>
+            <text x="110" y="308" text-anchor="middle"><tspan fill="#7a1f1f" font-weight="600">3</tspan><tspan fill="#7a6b5d">,</tspan><tspan fill="#1f3a5f" font-weight="600">1</tspan></text>
+            <text x="110" y="324" text-anchor="middle" font-size="9" fill="#7a6b5d">L,l</text>
+          </g>
+          <g>
+            <rect x="256" y="290" width="68" height="40" fill="#fbf6e7" stroke="#1a1410" stroke-width="1"/>
+            <text x="290" y="308" text-anchor="middle"><tspan fill="#7a1f1f" font-weight="600">0</tspan><tspan fill="#7a6b5d">,</tspan><tspan fill="#1f3a5f" font-weight="600">0</tspan></text>
+            <text x="290" y="324" text-anchor="middle" font-size="9" fill="#7a6b5d">L,r</text>
+          </g>
+          <g>
+            <rect x="396" y="290" width="68" height="40" fill="#fbf6e7" stroke="#1a1410" stroke-width="1"/>
+            <text x="430" y="308" text-anchor="middle"><tspan fill="#7a1f1f" font-weight="600">1</tspan><tspan fill="#7a6b5d">,</tspan><tspan fill="#1f3a5f" font-weight="600">2</tspan></text>
+            <text x="430" y="324" text-anchor="middle" font-size="9" fill="#7a6b5d">R,l</text>
+          </g>
+          <g>
+            <rect x="576" y="290" width="68" height="40" fill="#fbf6e7" stroke="#1a1410" stroke-width="1"/>
+            <text x="610" y="308" text-anchor="middle"><tspan fill="#7a1f1f" font-weight="600">2</tspan><tspan fill="#7a6b5d">,</tspan><tspan fill="#1f3a5f" font-weight="600">3</tspan></text>
+            <text x="610" y="324" text-anchor="middle" font-size="9" fill="#7a6b5d">R,r</text>
+          </g>
+        </g>
+
+        <!-- Legend -->
+        <g font-family="IBM Plex Sans, sans-serif" font-size="9" letter-spacing="0.12em" fill="#7a6b5d">
+          <text x="36" y="34" text-transform="uppercase">FIG. 1 &middot; EXTENSIVE FORM</text>
+        </g>
+      </svg>
+      <figcaption><span class="num">Fig. 1</span> A two-stage game with perfect information. Player 1 chooses <em>L</em> or <em>R</em>; Player 2, observing the choice, chooses <em>l</em> or <em>r</em>. Solve by <em>backward induction</em>: pick Player 2&rsquo;s best response at each subtree, then Player 1&rsquo;s best move given that response.</figcaption>
+    </figure>
+
+    <aside class="sidenote">
+      <span class="marker">&para;</span> A standing assumption in classical game theory is <em>common knowledge of rationality</em>: each player is rational, knows the others are rational, knows that they know, and so on forever. It is a useful idealization and a permanent source of trouble. In practice rationality is bounded, knowledge leaks, and the &ldquo;and so on forever&rdquo; gives out around the third or fourth iteration. Whole subfields &mdash; behavioral game theory, epistemic game theory &mdash; have grown up around exactly this discontent.
+    </aside>
+  </section>
+
+  <!-- ============================================================
+       IV. SIX CLASSIC GAMES
+       ============================================================ -->
+  <section class="wrap" aria-labelledby="sec-4">
+    <div class="section-head">
+      <div>
+        <span class="eyebrow">The workhorses</span>
+        <h2 id="sec-4">Six classic games.</h2>
+      </div>
+      <span class="roman" aria-hidden="true">IV.</span>
+    </div>
+
+    <p style="max-width:42em;">
+      Six two-by-two games carry almost the whole conceptual load of introductory theory. Each is a different <em>shape</em> of incentive: who dominates whom, where the equilibria sit, whether the conflict is over what to do or over who wins. Learn the shapes once and you will spot them in arms races, in standards battles, in office politics, in evolution.
+    </p>
+
+    <!-- 1. Prisoner's Dilemma -->
+    <article id="prisoners-dilemma" class="game-block">
+      <header class="game-block-head">
+        <span class="eyebrow">Game No. 01</span>
+        <h3>Prisoner&rsquo;s Dilemma.</h3>
+      </header>
+      <div class="game-block-grid">
+        <div class="payoff" data-payoff='{
+          "rowLabel":"You","colLabel":"Them",
+          "rowStrats":["Cooperate","Defect"],
+          "colStrats":["Cooperate","Defect"],
+          "cells":[[[3,3],[0,5]],[[5,0],[1,1]]],
+          "equilibria":[[1,1]],
+          "caption":"Defection strictly dominates cooperation for both players. The unique Nash equilibrium (D,D) yields 1 each — worse than the (C,C) outcome both could have reached."
+        }'></div>
+        <div class="game-block-text">
+          <p>
+            Two suspects, two cells, no communication. Cooperate (stay silent) and you each get a light sentence. Defect (turn) when your partner cooperates and you walk while they take the fall. Both defect and you both rot. The payoffs above satisfy the canonical ordering <em>T &gt; R &gt; P &gt; S</em> &mdash; temptation beats reward beats punishment beats sucker.
+          </p>
+          <p>
+            Whatever your partner does, defection earns you more &mdash; so defection is a <em>dominant strategy</em>. Both players reason this way; both defect; both end up at (1, 1), which is <em>Pareto-dominated</em> by the (3, 3) they could have had. Individual rationality, collective disaster.
+          </p>
+          <p class="referent"><strong>In the wild:</strong> arms races, cartel pricing, climate treaties, doping in cycling, advertising spend between rivals. Anywhere the payoff to defection rises with the other side&rsquo;s cooperation.</p>
+        </div>
+      </div>
+    </article>
+
+    <!-- 2. Stag Hunt -->
+    <article id="stag-hunt" class="game-block">
+      <header class="game-block-head">
+        <span class="eyebrow">Game No. 02</span>
+        <h3>Stag Hunt.</h3>
+      </header>
+      <div class="game-block-grid">
+        <div class="payoff" data-payoff='{
+          "rowLabel":"You","colLabel":"Partner",
+          "rowStrats":["Stag","Hare"],
+          "colStrats":["Stag","Hare"],
+          "cells":[[[4,4],[0,3]],[[3,0],[3,3]]],
+          "equilibria":[[0,0],[1,1]],
+          "caption":"Two pure equilibria. (Stag, Stag) is payoff-dominant; (Hare, Hare) is risk-dominant. The hard question is which one a population will settle into."
+        }'></div>
+        <div class="game-block-text">
+          <p>
+            Rousseau&rsquo;s parable. Two hunters can cooperate to take down a stag &mdash; large prize, but only if both commit &mdash; or each can chase a hare alone, a small but certain meal. If you hunt stag and your partner chases a hare, you go home empty.
+          </p>
+          <p>
+            Two pure equilibria sit side by side. (Stag, Stag) is <em>payoff-dominant</em>: better for everyone if both can be relied upon. (Hare, Hare) is <em>risk-dominant</em>: safer if you suspect your partner of doubt. The whole problem of social cooperation is in the gap between them.
+          </p>
+          <p class="referent"><strong>In the wild:</strong> startup co-founders, military alliances, common technical standards, team projects where one slacker tanks the grade.</p>
+        </div>
+      </div>
+    </article>
+
+    <!-- 3. Chicken -->
+    <article id="chicken" class="game-block">
+      <header class="game-block-head">
+        <span class="eyebrow">Game No. 03</span>
+        <h3>Chicken &mdash; or Hawk-Dove.</h3>
+      </header>
+      <div class="game-block-grid">
+        <div class="payoff" data-payoff='{
+          "rowLabel":"Driver A","colLabel":"Driver B",
+          "rowStrats":["Swerve","Straight"],
+          "colStrats":["Swerve","Straight"],
+          "cells":[[[0,0],[-1,1]],[[1,-1],[-10,-10]]],
+          "equilibria":[[0,1],[1,0]],
+          "caption":"Two asymmetric pure equilibria — one driver swerves, the other doesn’t — plus a third mixed equilibrium. Mutual disaster is the worst outcome but not an equilibrium."
+        }'></div>
+        <div class="game-block-text">
+          <p>
+            Two cars race toward a single-lane bridge. Swerve and you are the chicken; hold straight and you win &mdash; unless the other also holds straight, in which case nobody wins anything. The structure is the opposite of the Prisoner&rsquo;s Dilemma: here it is mutual defection that is catastrophic, not mutual cooperation that is unstable.
+          </p>
+          <p>
+            Two asymmetric pure equilibria exist (one swerves, the other holds), plus a mixed equilibrium in which each player goes straight with some probability. Schelling&rsquo;s insight: the way to <em>win</em> Chicken is to credibly remove your own steering wheel &mdash; commit so visibly to straight that the other side has only one rational response.
+          </p>
+          <p class="referent"><strong>In the wild:</strong> the Cuban Missile Crisis, traffic merges, animal territorial displays, brinkmanship in labor strikes, debt-ceiling standoffs.</p>
+        </div>
+      </div>
+    </article>
+
+    <!-- 4. Battle of the Sexes -->
+    <article id="battle-of-the-sexes" class="game-block">
+      <header class="game-block-head">
+        <span class="eyebrow">Game No. 04</span>
+        <h3>Battle of the Sexes.</h3>
+      </header>
+      <div class="game-block-grid">
+        <div class="payoff" data-payoff='{
+          "rowLabel":"Alex","colLabel":"Sam",
+          "rowStrats":["Opera","Boxing"],
+          "colStrats":["Opera","Boxing"],
+          "cells":[[[3,2],[0,0]],[[1,1],[2,3]]],
+          "equilibria":[[0,0],[1,1]],
+          "caption":"Both prefer to coordinate, but disagree on which equilibrium. The interesting question is not whether to meet but where."
+        }'></div>
+        <div class="game-block-text">
+          <p>
+            A coordination game with a twist. Alex prefers the opera, Sam prefers the boxing match, but both would rather attend the wrong event together than the right one alone. Each pure equilibrium &mdash; both at the opera, or both at boxing &mdash; gives one player their preferred outcome and the other a consolation prize.
+          </p>
+          <p>
+            The hard problem is <em>equilibrium selection</em>. The math admits both; which one prevails depends on convention, precedent, the first player to commit, or some focal point that singles one out. The puzzle is no longer whether to cooperate, but whose terms cooperation will be on.
+          </p>
+          <p class="referent"><strong>In the wild:</strong> standards wars (Blu-ray vs. HD-DVD, VHS vs. Betamax), where two firms meet, which side of a treaty wording wins.</p>
+        </div>
+      </div>
+    </article>
+
+    <!-- 5. Matching Pennies -->
+    <article id="matching-pennies" class="game-block">
+      <header class="game-block-head">
+        <span class="eyebrow">Game No. 05</span>
+        <h3>Matching Pennies.</h3>
+      </header>
+      <div class="game-block-grid">
+        <div class="payoff" data-payoff='{
+          "rowLabel":"Matcher","colLabel":"Mismatcher",
+          "rowStrats":["Heads","Tails"],
+          "colStrats":["Heads","Tails"],
+          "cells":[[[1,-1],[-1,1]],[[-1,1],[1,-1]]],
+          "caption":"Strict zero-sum. No pure-strategy equilibrium — whatever one player does, the other wants to react, and so on. The unique equilibrium is the mixed strategy (½, ½)."
+        }'></div>
+        <div class="game-block-text">
+          <p>
+            Two players each place a penny. The Matcher wins if both pennies show the same face; the Mismatcher wins if they differ. The sum of payoffs is always zero &mdash; one gains exactly what the other loses.
+          </p>
+          <p>
+            No pure-strategy equilibrium exists: whichever pure choice one player commits to, the other has a strict best response that beats them. The only stable answer is a <em>mixed strategy</em>: each player randomizes 50/50. Predictability is fatal; deliberate noise is rational. This is the toy version of every pursuit-evasion problem in the canon.
+          </p>
+          <p class="referent"><strong>In the wild:</strong> penalty kicks (kicker vs. goalkeeper), random tax audits, server-side anti-cheat heuristics, evading radar, kids playing rock-paper-scissors.</p>
+        </div>
+      </div>
+    </article>
+
+    <!-- 6. Pure Coordination -->
+    <article id="pure-coordination" class="game-block">
+      <header class="game-block-head">
+        <span class="eyebrow">Game No. 06</span>
+        <h3>Pure Coordination.</h3>
+      </header>
+      <div class="game-block-grid">
+        <div class="payoff" data-payoff='{
+          "rowLabel":"You","colLabel":"Them",
+          "rowStrats":["Left","Right"],
+          "colStrats":["Left","Right"],
+          "cells":[[[1,1],[0,0]],[[0,0],[1,1]]],
+          "equilibria":[[0,0],[1,1]],
+          "caption":"Two equally good equilibria, no conflict of interest. The whole problem is which one to land on. Conventions exist to answer that question."
+        }'></div>
+        <div class="game-block-text">
+          <p>
+            Drive on the left or drive on the right &mdash; it does not matter, so long as everyone in the country picks the same one. Two pure equilibria, equally good, no conflict of preference. And yet there is still a problem: <em>which</em> equilibrium will be played?
+          </p>
+          <p>
+            Schelling called the device that resolves this a <em>focal point</em>: a feature of the situation, often outside the formal model, that one option just <em>obviously</em> picks itself. A landmark. A round number. A historical accident that hardened into a convention. Pure coordination is the cleanest illustration that the math of equilibrium underspecifies the world.
+          </p>
+          <p class="referent"><strong>In the wild:</strong> side of the road, the QWERTY keyboard, time zones, language, calendar conventions, file-format standards.</p>
+        </div>
+      </div>
+    </article>
+
+    <div class="ornament-divider" aria-hidden="true">&sect; &sect; &sect;</div>
+  </section>
+
+  <!-- ============================================================
+       V. RATIONALITY & EQUILIBRIUM (TEASER)
+       ============================================================ -->
+  <section class="wrap" aria-labelledby="sec-5">
+    <div class="section-head">
+      <div>
+        <span class="eyebrow">A first taste</span>
+        <h2 id="sec-5">Rationality, knowledge, equilibrium.</h2>
+      </div>
+      <span class="roman" aria-hidden="true">V.</span>
+    </div>
+
+    <div class="wrap-narrow" style="margin-inline:0;">
+      <p>
+        With players, strategies, payoffs, and information on the page, the natural next question is: <em>what will a rational player actually do?</em> The bedrock concept is the <em>best response</em>. Given a belief about what the others will play, your best response is the strategy &mdash; pure or mixed &mdash; that maximizes your expected payoff. A profile of strategies in which every player is simultaneously playing a best response to all the others is a <em>Nash equilibrium</em>.
+      </p>
+      <p>
+        Two related ideas help locate one. A <em>dominant strategy</em> is one that is a best response no matter what the others do &mdash; defection in the Prisoner&rsquo;s Dilemma is the canonical example. A <em>dominated strategy</em> is one for which some other strategy is always at least as good and sometimes better &mdash; cooperation in that same game. Rational players will not play strictly dominated strategies, which lets you delete them and shrink the game. Sometimes a single equilibrium falls out of this iterative deletion. More often the work is just beginning.
+      </p>
+      <p>
+        Existence is comforting. Selection is not. Nash&rsquo;s 1950 theorem guarantees that every finite game has at least one equilibrium (possibly in mixed strategies). It does not tell you which one the players will reach, whether they will reach it at all, or what to do when there are several. That is the territory of the next chapter.
+      </p>
+      <p style="margin-top:var(--s-5);">
+        <a class="btn" href="equilibria.html">Read the equilibria volume <span class="arrow">&rarr;</span></a>
+      </p>
+    </div>
+  </section>
+
+  <!-- ============================================================
+       VI. PITFALLS
+       ============================================================ -->
+  <section class="wrap" aria-labelledby="sec-6">
+    <div class="section-head">
+      <div>
+        <span class="eyebrow">Use with care</span>
+        <h2 id="sec-6">Common modeling pitfalls.</h2>
+      </div>
+      <span class="roman" aria-hidden="true">VI.</span>
+    </div>
+
+    <p style="max-width:42em;">
+      Game theory is a sharp instrument, and like every sharp instrument it cuts the user when held wrong. Four mistakes recur often enough to deserve naming.
+    </p>
+
+    <div class="pitfalls">
+      <div class="callout callout-warn">
+        <h4>Utility is not money.</h4>
+        <p>The numbers in a payoff matrix are <em>utilities</em>, a measure of preference. They may correlate with dollars, but they are not identical. A risk-averse millionaire and a desperate gambler attach very different utilities to the same $100. A model that quietly substitutes cash for utility will mispredict whenever the players differ in attitude toward risk &mdash; which is almost always.</p>
+      </div>
+      <div class="callout callout-warn">
+        <h4>Players invent moves.</h4>
+        <p>The strategy set you write down is rarely the strategy set the world contains. Real players will refuse to play, change the rules, lobby the referee, build a new product category, or simply leave the table. Models are useful because they ignore these moves, and dangerous for the same reason.</p>
+      </div>
+      <div class="callout callout-warn">
+        <h4>One-shot is not repeated.</h4>
+        <p>Almost every result from the one-shot Prisoner&rsquo;s Dilemma reverses once the game is played repeatedly with an uncertain horizon. Cooperation, impossible in a single round, becomes sustainable in the infinitely-repeated version. When the model says &ldquo;defect&rdquo; and reality says &ldquo;cooperate,&rdquo; suspect that you stripped out the repetition.</p>
+      </div>
+      <div class="callout callout-warn">
+        <h4>Common knowledge is a heroic assumption.</h4>
+        <p>Most equilibrium analysis quietly assumes every player knows the payoffs, knows the others know, knows that they know, and so on. Drop any layer of that and reasonable players will behave in ways the model calls irrational. Treat common knowledge as a load-bearing assumption, not a free parameter.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============================================================
+       VII. WHERE TO GO FROM HERE
+       ============================================================ -->
+  <section class="wrap" aria-labelledby="sec-7">
+    <div class="section-head">
+      <div>
+        <span class="eyebrow">Continue reading</span>
+        <h2 id="sec-7">Where to go from here.</h2>
+      </div>
+      <span class="roman" aria-hidden="true">VII.</span>
+    </div>
+
+    <div class="next-grid">
+      <article class="next-card">
+        <span class="eyebrow">Next chapter</span>
+        <h3>Equilibria.</h3>
+        <p>Nash equilibrium properly developed: existence, computation, mixed strategies, subgame perfection, evolutionary stability, and the equilibrium-selection problem the present chapter only gestured at.</p>
+        <a class="btn btn-primary" href="equilibria.html">Open Equilibria <span class="arrow">&rarr;</span></a>
+      </article>
+      <article class="next-card">
+        <span class="eyebrow">In use</span>
+        <h3>Applications.</h3>
+        <p>The same six shapes, deployed in the wild: spectrum auctions, antitrust, evolutionary biology, climate negotiations, voting, AI alignment, the price of your airline ticket.</p>
+        <a class="btn" href="applications.html">Open Applications <span class="arrow">&rarr;</span></a>
+      </article>
+    </div>
+  </section>
+
+</main>
+
+<!-- ============================================================
+     COLOPHON / FOOTER
+     ============================================================ -->
+<footer class="colophon" role="contentinfo">
+  <div class="wrap">
+    <div class="colophon-grid">
+      <div>
+        <h5>The Publication</h5>
+        <p style="max-width:34em;">
+          <em>Game Theory &amp; Co.</em> is an open-source field guide to strategic decision-making, hand-set in Fraunces and Source Serif. Built as a static site &mdash; no trackers, no analytics, no nonsense.
+        </p>
+      </div>
+      <div>
+        <h5>Sections</h5>
+        <ul>
+          <li><a href="foundations.html">Foundations</a></li>
+          <li><a href="equilibria.html">Equilibria</a></li>
+          <li><a href="applications.html">Applications</a></li>
+          <li><a href="simulator.html">Simulator</a></li>
+        </ul>
+      </div>
+      <div>
+        <h5>Source</h5>
+        <ul>
+          <li><a href="#" rel="noopener">GitHub repository</a></li>
+          <li><a href="#" rel="noopener">Report an issue</a></li>
+          <li><a href="#" rel="noopener">Contribute</a></li>
+        </ul>
+      </div>
+      <div>
+        <h5>Further Reading</h5>
+        <ul>
+          <li>von Neumann &amp; Morgenstern (1944)</li>
+          <li>Schelling, <em>Strategy of Conflict</em> (1960)</li>
+          <li>Axelrod, <em>Evolution of Cooperation</em> (1984)</li>
+        </ul>
+      </div>
+    </div>
+    <div class="colophon-meta">
+      <span>&copy; <span data-year>2026</span> Game Theory &amp; Co. &mdash; MIT License.</span>
+      <span class="seal">&#x2767; fin &#x2767;</span>
+      <span>Set in Fraunces, Source Serif 4, JetBrains Mono.</span>
+    </div>
+  </div>
+</footer>
+
+</body>
+</html>

@@ -1,0 +1,227 @@
+/* ============================================================
+   FOUNDATIONS — page-specific styles
+   Layered on top of main.css. Nothing here may shadow a token.
+   ============================================================ */
+
+/* ---------- INGREDIENTS GRID (Section II) ----------
+   A 2x2 grid of numbered "ingredient" cards. Visually echoes the
+   .app-item rhythm but is heavier — these are taxonomy pillars,
+   not a long list. Roman lower-case numerals as ornament.
+*/
+.ingredients {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: var(--s-6);
+  margin-top: var(--s-6);
+}
+.ingredient {
+  background: var(--surface);
+  border: 1px solid var(--rule);
+  padding: var(--s-5) var(--s-5) var(--s-5) var(--s-7);
+  position: relative;
+}
+.ingredient::before {
+  content: "";
+  position: absolute;
+  inset: 4px;
+  border: 1px solid var(--rule);
+  pointer-events: none;
+}
+.ingredient .ingredient-num {
+  position: absolute;
+  top: var(--s-4);
+  left: var(--s-4);
+  font-family: var(--font-display);
+  font-style: italic;
+  font-size: var(--fs-2xl);
+  color: var(--accent);
+  line-height: 1;
+}
+.ingredient h3 {
+  font-family: var(--font-display);
+  font-style: italic;
+  font-size: var(--fs-xl);
+  margin: 0 0 var(--s-3);
+}
+.ingredient p {
+  font-size: var(--fs-sm);
+  line-height: 1.55;
+  color: var(--ink-soft);
+  text-indent: 0;
+  margin: 0;
+}
+
+/* ---------- EXTENSIVE-FORM FIGURE (Section III) ----------
+   The SVG sits in a paper-coloured plate framed by a hairline rule.
+*/
+.fig-tree svg {
+  width: 100%;
+  height: auto;
+  background: var(--surface);
+  border: 1px solid var(--rule);
+  display: block;
+}
+
+/* ---------- GAME-BLOCK (Section IV) ----------
+   Each of the six classic games gets a two-column block: payoff
+   matrix on the left, analysis on the right. Stacks under 880px.
+*/
+.game-block {
+  margin-top: var(--s-8);
+  padding-top: var(--s-5);
+  border-top: 1px solid var(--rule);
+  scroll-margin-top: 6rem;
+}
+.game-block:first-of-type {
+  border-top: 0;
+  padding-top: 0;
+  margin-top: var(--s-6);
+}
+.game-block-head {
+  display: flex;
+  align-items: baseline;
+  gap: var(--s-4);
+  flex-wrap: wrap;
+  margin-bottom: var(--s-4);
+}
+.game-block-head .eyebrow {
+  margin-bottom: 0;
+  padding-bottom: 0;
+  border-bottom: 0;
+  color: var(--accent);
+}
+.game-block-head h3 {
+  font-family: var(--font-display);
+  font-style: italic;
+  font-size: var(--fs-2xl);
+  margin: 0;
+}
+.game-block-grid {
+  display: grid;
+  grid-template-columns: minmax(280px, 1fr) 1.3fr;
+  gap: var(--s-6) var(--s-7);
+  align-items: start;
+}
+.game-block-grid .payoff {
+  margin-top: 0;
+}
+.game-block-text p {
+  max-width: 36em;
+}
+.game-block-text p.referent {
+  margin-top: var(--s-4);
+  padding-top: var(--s-3);
+  border-top: 1px dotted var(--rule);
+  font-size: var(--fs-sm);
+  color: var(--ink-soft);
+  text-indent: 0;
+}
+.game-block-text p.referent strong {
+  font-family: var(--font-label);
+  font-size: var(--fs-xs);
+  text-transform: uppercase;
+  letter-spacing: 0.15em;
+  color: var(--accent);
+  margin-right: var(--s-2);
+}
+
+/* ---------- PITFALLS GRID (Section VI) ----------
+   A 2x2 grid of .callout boxes, with a warning variant that swaps
+   the blue accent rail for oxblood and the § glyph for a ※ mark.
+*/
+.pitfalls {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: var(--s-5);
+  margin-top: var(--s-6);
+}
+.pitfalls .callout {
+  margin: 0;
+  max-width: none;
+}
+.callout-warn {
+  border-left-color: var(--accent);
+}
+.callout-warn::before {
+  content: "\203B";  /* reference mark ※ */
+  color: var(--accent);
+}
+.callout-warn h4 {
+  color: var(--accent);
+}
+
+/* ---------- NEXT GRID (Section VII) ----------
+   Two large CTA cards. Echo the game-card letterpress hover.
+*/
+.next-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: var(--s-6);
+  margin-top: var(--s-5);
+}
+.next-card {
+  background: var(--surface);
+  border: 1px solid var(--rule);
+  padding: var(--s-6);
+  position: relative;
+  transition: transform .25s ease, box-shadow .25s ease;
+}
+.next-card::before {
+  content: "";
+  position: absolute;
+  inset: 4px;
+  border: 1px solid var(--rule);
+  pointer-events: none;
+}
+.next-card:hover {
+  transform: translateY(-3px);
+  box-shadow: 6px 8px 0 -2px var(--ink);
+}
+.next-card h3 {
+  font-family: var(--font-display);
+  font-style: italic;
+  font-size: var(--fs-2xl);
+  margin: 0 0 var(--s-3);
+}
+.next-card p {
+  font-size: var(--fs-base);
+  color: var(--ink-soft);
+  text-indent: 0;
+  margin: 0 0 var(--s-5);
+  max-width: 32em;
+}
+.next-card .eyebrow {
+  margin-bottom: var(--s-3);
+}
+
+/* ---------- RESPONSIVE ---------- */
+@media (max-width: 880px) {
+  .ingredients,
+  .pitfalls,
+  .next-grid {
+    grid-template-columns: 1fr;
+  }
+  .game-block-grid {
+    grid-template-columns: 1fr;
+    gap: var(--s-5);
+  }
+  .game-block-head h3 {
+    font-size: var(--fs-xl);
+  }
+  .ingredient {
+    padding-left: var(--s-6);
+  }
+}
+@media (max-width: 520px) {
+  .game-block-head {
+    flex-direction: column;
+    gap: var(--s-2);
+  }
+  .next-card {
+    padding: var(--s-5);
+  }
+  /* keep the SVG legible — let it shrink without cropping labels */
+  .fig-tree svg {
+    min-width: 0;
+  }
+}

@@ -1,0 +1,408 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Simulator &mdash; Game Theory &amp; Co.</title>
+  <meta name="description" content="Run Robert Axelrod's iterated Prisoner's Dilemma tournament in your browser. Pit Tit-for-Tat, Grim Trigger, Pavlov, Generous TFT, Detective and others against each other under tunable payoffs and noise." />
+  <meta name="theme-color" content="#f4ecd8" />
+
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght,SOFT@0,9..144,300..700,0..100;1,9..144,300..700,0..100&family=Source+Serif+4:ital,opsz,wght@0,8..60,300..700;1,8..60,300..700&family=JetBrains+Mono:wght@400;600&family=IBM+Plex+Sans:wght@400;500;600&display=swap" rel="stylesheet" />
+
+  <link rel="stylesheet" href="assets/css/main.css" />
+  <link rel="stylesheet" href="assets/css/simulator.css" />
+  <script defer src="assets/js/main.js"></script>
+  <script defer src="assets/js/simulator.js"></script>
+</head>
+<body>
+
+<!-- ============================================================
+     MASTHEAD
+     ============================================================ -->
+<header class="masthead" role="banner">
+  <div class="wrap masthead-inner">
+    <a href="index.html" class="brand" aria-label="Game Theory &amp; Co. — home">
+      Game Theory <span class="amp">&amp;</span> Co.
+      <small>Vol. I &middot; A Field Guide</small>
+    </a>
+    <nav class="primary" aria-label="Primary">
+      <a href="index.html">Home</a>
+      <a href="foundations.html">Foundations</a>
+      <a href="equilibria.html">Equilibria</a>
+      <a href="applications.html">Applications</a>
+      <a href="simulator.html">Simulator</a>
+    </nav>
+    <div class="issue-meta" aria-hidden="true">
+      Est. MMXXVI &middot; <span data-year>2026</span>
+    </div>
+    <button class="nav-toggle" aria-expanded="false" aria-controls="primary-nav">Menu</button>
+  </div>
+</header>
+
+<main id="main">
+
+  <!-- ============================================================
+       HERO
+       ============================================================ -->
+  <section class="hero wrap" aria-labelledby="hero-title">
+    <div class="hero-grid">
+      <span class="eyebrow">No. 05 &middot; The Tournament</span>
+      <h1 id="hero-title" class="hero-title reveal in">
+        Run Axelrod&rsquo;s <span class="accent">tournament</span> yourself<span class="ornament">.</span>
+      </h1>
+      <div class="hero-rule" aria-hidden="true"></div>
+      <p class="lede reveal in">
+        In 1980, Robert Axelrod invited the world&rsquo;s game theorists to submit strategies for the iterated Prisoner&rsquo;s Dilemma. He pitted every entry against every other for 200 rounds apiece. Anatol Rapoport&rsquo;s four-line <em>Tit-for-Tat</em> won. Here is that tournament &mdash; in your browser, with knobs &mdash; so you can watch the same surprising lesson play out in real time.
+      </p>
+    </div>
+  </section>
+
+  <!-- ============================================================
+       I. PRELIMINARIES
+       ============================================================ -->
+  <section class="wrap">
+    <div class="section-head">
+      <div>
+        <span class="eyebrow">Preliminaries</span>
+        <h2>The game, in one paragraph.</h2>
+      </div>
+      <span class="roman" aria-hidden="true">I.</span>
+    </div>
+
+    <div class="wrap-narrow" style="margin-inline:0;">
+      <p class="dropcap">
+        Each round, both players choose simultaneously between <em>cooperate</em> (C) and <em>defect</em> (D). Mutual cooperation pays the <em>reward</em> R to each. Mutual defection pays the <em>punishment</em> P. A lone defector earns the <em>temptation</em> T at the cooperator&rsquo;s expense, who receives the <em>sucker&rsquo;s payoff</em> S. The canonical numbers are <strong>T = 5, R = 3, P = 1, S = 0</strong>; the canonical inequality is <strong>T &gt; R &gt; P &gt; S</strong>, with the further constraint <strong>2R &gt; T + S</strong> so that mutual cooperation strictly beats alternating exploitation. Played once, the rational move is to defect &mdash; and both players know it. Played a hundred times against the same opponent, with memory and reputation, the answer is wildly less obvious. That is the whole point of the exercise.
+      </p>
+
+      <aside class="sidenote">
+        <span class="marker">¶</span> Axelrod ran the tournament twice. The second time everyone had read the analysis of the first. Tit-for-Tat won again. There is no greater compliment a strategy can pay than to be re-submitted, in better company, and still come first.
+      </aside>
+    </div>
+  </section>
+
+  <!-- ============================================================
+       II. TOURNAMENT
+       ============================================================ -->
+  <section class="wrap" aria-labelledby="tournament-h">
+    <div class="section-head">
+      <div>
+        <span class="eyebrow">The main event</span>
+        <h2 id="tournament-h">Round-robin tournament.</h2>
+      </div>
+      <span class="roman" aria-hidden="true">II.</span>
+    </div>
+
+    <p style="max-width:40em;">
+      Pick one strategy to be &ldquo;yours.&rdquo; The simulator will play your strategy &mdash; and every other strategy in the pool &mdash; against every other strategy, itself included. After the dust settles you get a leaderboard, a horizontal bar chart, and a clear answer to the only question that matters: how would <em>you</em> have done?
+    </p>
+
+    <div class="sim-panel" aria-labelledby="tournament-h2">
+      <div class="panel-head">
+        <h3 id="tournament-h2">Configure the tournament.</h3>
+        <span class="panel-marker">[ panel 01 / tournament ]</span>
+      </div>
+
+      <div class="sim-controls">
+        <div class="sim-field">
+          <label for="my-strategy">Your strategy</label>
+          <select id="my-strategy" aria-describedby="my-strategy-desc"></select>
+          <p class="field-help" id="my-strategy-desc"></p>
+        </div>
+
+        <div class="sim-field">
+          <label for="rounds">Rounds per match</label>
+          <select id="rounds">
+            <option value="50">50</option>
+            <option value="100" selected>100</option>
+            <option value="200">200</option>
+            <option value="500">500</option>
+          </select>
+          <p class="field-help">Axelrod ran 200. Longer matches favor strategies that recover from punishment.</p>
+        </div>
+
+        <div class="sim-field">
+          <label for="seed">Seed (optional)</label>
+          <input type="text" id="seed" placeholder="axelrod-1980" />
+          <p class="field-help">Type any word or number. Two runs with the same seed produce identical tournaments &mdash; useful for class demos.</p>
+        </div>
+      </div>
+
+      <button class="sim-advanced-toggle" id="advanced-toggle" type="button" aria-expanded="false" aria-controls="advanced">
+        Advanced controls &mdash; show
+      </button>
+      <div class="sim-advanced" id="advanced" hidden>
+        <div class="adv-row">
+          <div>
+            <h4>Payoff matrix</h4>
+            <div class="pay-grid">
+              <div>
+                <label for="pay-T">T</label>
+                <input type="number" id="pay-T" value="5" step="0.5" />
+                <div class="pay-meaning">temptation</div>
+              </div>
+              <div>
+                <label for="pay-R">R</label>
+                <input type="number" id="pay-R" value="3" step="0.5" />
+                <div class="pay-meaning">reward</div>
+              </div>
+              <div>
+                <label for="pay-P">P</label>
+                <input type="number" id="pay-P" value="1" step="0.5" />
+                <div class="pay-meaning">punishment</div>
+              </div>
+              <div>
+                <label for="pay-S">S</label>
+                <input type="number" id="pay-S" value="0" step="0.5" />
+                <div class="pay-meaning">sucker</div>
+              </div>
+            </div>
+            <p class="pay-warning" id="pay-warning" hidden></p>
+            <a href="#" class="pay-reset" id="pay-reset">Reset to T=5 R=3 P=1 S=0</a>
+          </div>
+          <div>
+            <h4>Noise</h4>
+            <div class="sim-field">
+              <label for="noise">
+                Mistake probability &mdash; <span id="noise-readout">0%</span>
+              </label>
+              <input type="range" id="noise" min="0" max="0.3" step="0.01" value="0" />
+              <p class="field-help">
+                Every intended move flips with probability &epsilon;. This is what makes pure Tit-for-Tat brittle &mdash; one accidental defection triggers an endless echo. Try 5&ndash;10% and compare TFT with Generous TFT.
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="sim-run-row">
+        <button class="btn btn-primary" id="run-tournament" type="button">
+          Run tournament <span class="arrow">&rarr;</span>
+        </button>
+        <p class="run-note">Plays every strategy against every other for the chosen number of rounds. Results populate below.</p>
+      </div>
+    </div>
+
+    <!-- Results -->
+    <div id="tournament-results" hidden aria-live="polite">
+      <h3 style="margin-top:var(--s-7);">Results.</h3>
+      <div id="tournament-summary"></div>
+
+      <div class="results-grid">
+        <div>
+          <table class="leaderboard" id="tournament-table" aria-label="Tournament leaderboard"></table>
+        </div>
+        <div class="chart-wrap">
+          <div class="chart-eyebrow">Fig. 1 &mdash; Total points by strategy</div>
+          <div id="tournament-chart"></div>
+          <div class="chart-legend">
+            <span><span class="sw sw-nice"></span>Nice (never defects first)</span>
+            <span><span class="sw sw-mean"></span>Not nice</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============================================================
+       III. MATCHUP
+       ============================================================ -->
+  <section class="wrap" aria-labelledby="matchup-h">
+    <div class="section-head">
+      <div>
+        <span class="eyebrow">Microscope</span>
+        <h2 id="matchup-h">Inspect a single matchup.</h2>
+      </div>
+      <span class="roman" aria-hidden="true">III.</span>
+    </div>
+
+    <p style="max-width:42em;">
+      The leaderboard hides the texture. Pull any two strategies apart, watch them play move by move, and you can see exactly how a tournament outcome arises: where the first defection lands, who breaks the détente, whether anyone is forgiving enough to climb back out. Run <strong>Tit-for-Tat</strong> against <strong>Always Defect</strong> and watch a single cooperative move get punished into oblivion. Then run <strong>Tit-for-Two-Tats</strong> against an alternating defector and watch it get fleeced.
+    </p>
+
+    <div class="sim-panel">
+      <div class="panel-head">
+        <h3>Pick two and play.</h3>
+        <span class="panel-marker">[ panel 02 / matchup ]</span>
+      </div>
+
+      <div class="sim-controls">
+        <div class="sim-field">
+          <label for="lookup-a">Left player</label>
+          <select id="lookup-a" aria-describedby="lookup-a-desc"></select>
+          <p class="field-help strat-desc" id="lookup-a-desc"></p>
+        </div>
+        <div class="sim-field">
+          <label for="lookup-b">Right player</label>
+          <select id="lookup-b" aria-describedby="lookup-b-desc"></select>
+          <p class="field-help strat-desc" id="lookup-b-desc"></p>
+        </div>
+        <div class="sim-field">
+          <label for="matchup-rounds">Rounds</label>
+          <select id="matchup-rounds">
+            <option value="20">20</option>
+            <option value="50">50</option>
+            <option value="100" selected>100</option>
+            <option value="200">200</option>
+          </select>
+          <p class="field-help">Shorter runs are easier to read move by move.</p>
+        </div>
+      </div>
+
+      <div class="matchup-quickpicks" aria-label="Quick-pick matchups">
+        <button class="chip" type="button" data-a="tft" data-b="alld">TFT vs ALLD</button>
+        <button class="chip" type="button" data-a="allc" data-b="alld">ALLC vs ALLD</button>
+        <button class="chip" type="button" data-a="grim" data-b="random">GRIM vs RAND</button>
+        <button class="chip" type="button" data-a="pavlov" data-b="tft">PAV vs TFT</button>
+        <button class="chip" type="button" data-a="tft" data-b="tft">TFT vs TFT</button>
+        <button class="chip" type="button" data-a="detective" data-b="allc">DET vs ALLC</button>
+        <button class="chip" type="button" data-a="gtft" data-b="gtft">GTFT vs GTFT</button>
+      </div>
+
+      <div class="sim-run-row">
+        <button class="btn btn-primary" id="run-matchup" type="button">
+          Play matchup <span class="arrow">&rarr;</span>
+        </button>
+        <p class="run-note">
+          Uses the same payoff matrix and noise as the tournament panel. C cells are pale; D cells are inked &mdash; oxblood for the left, blue for the right.
+        </p>
+      </div>
+
+      <div id="matchup-out" hidden aria-live="polite"></div>
+    </div>
+  </section>
+
+  <!-- ============================================================
+       IV. LESSONS
+       ============================================================ -->
+  <section class="wrap" aria-labelledby="lessons-h">
+    <div class="section-head">
+      <div>
+        <span class="eyebrow">What to notice</span>
+        <h2 id="lessons-h">Four things the tournament will teach you.</h2>
+      </div>
+      <span class="roman" aria-hidden="true">IV.</span>
+    </div>
+
+    <p style="max-width:42em;">
+      Axelrod squeezed his data for moral lessons, and they have aged better than most empirical findings in social science. Run the simulator a few times &mdash; with and without noise, with short and long matches &mdash; and watch these four show up unbidden.
+    </p>
+
+    <div class="lessons">
+      <div class="lesson">
+        <h4>Nice strategies finish near the top.</h4>
+        <p>
+          Strategies that never defect first &mdash; ALLC, TFT, TF2T, GTFT, GRIM, PAV &mdash; tend to cluster at the head of the leaderboard. The reason is mechanical: they get the mutual-cooperation reward against each other and against themselves, which dominates everything else.
+        </p>
+      </div>
+      <div class="lesson">
+        <h4>Pure cooperation is suicidal.</h4>
+        <p>
+          <em>Always Cooperate</em> scores zero against <em>Always Defect</em>, every time. Niceness without the capacity to retaliate is just a buffet. Tit-for-Tat&rsquo;s genius is that it punishes immediately and forgives immediately &mdash; it loses one round, never more, against an unrepentant defector.
+        </p>
+      </div>
+      <div class="lesson">
+        <h4>Forgiveness pays under noise.</h4>
+        <p>
+          Turn the noise slider up to 5 or 10 percent and re-run. Two Tit-for-Tats fall into a recriminatory loop on the first stray defection; two <em>Generous</em> Tit-for-Tats forgive their way back to cooperation. The world is noisy; durable cooperation has to be.
+        </p>
+      </div>
+      <div class="lesson">
+        <h4>Clarity beats cleverness.</h4>
+        <p>
+          The simple strategies &mdash; four lines of code &mdash; outperform the elaborate ones. Opponents can read them. Predictability is a feature, not a bug. The strategies that fail are usually the ones that try to be too clever, and end up confusing themselves.
+        </p>
+      </div>
+    </div>
+
+    <blockquote>
+      &ldquo;What accounts for Tit-for-Tat&rsquo;s robust success is its combination of being nice, retaliatory, forgiving, and clear. Its niceness prevents it from getting into unnecessary trouble. Its retaliation discourages the other side from persisting whenever defection is tried. Its forgiveness helps restore mutual cooperation. And its clarity makes it intelligible to the other player, thereby eliciting long-term cooperation.&rdquo;
+      <cite>Robert Axelrod, <em>The Evolution of Cooperation</em>, 1984</cite>
+    </blockquote>
+
+    <div class="ornament-divider" aria-hidden="true">&sect; &sect; &sect;</div>
+  </section>
+
+  <!-- ============================================================
+       V. NEXT
+       ============================================================ -->
+  <section class="wrap" aria-labelledby="next-h">
+    <div class="section-head">
+      <div>
+        <span class="eyebrow">Read on</span>
+        <h2 id="next-h">Where this leads.</h2>
+      </div>
+      <span class="roman" aria-hidden="true">V.</span>
+    </div>
+
+    <div class="wrap-narrow" style="margin-inline:0;">
+      <p>
+        The simulator is a microcosm of one of the deepest results in the theory: the <em>folk theorem</em> for repeated games. In a one-shot Prisoner&rsquo;s Dilemma, mutual defection is the only equilibrium. Stretch the game indefinitely &mdash; or even just give players a sufficiently high probability of meeting again &mdash; and almost any outcome, including full cooperation, can be sustained as an equilibrium. The shadow of the future does the work.
+      </p>
+      <p>
+        For the formal treatment &mdash; subgame perfection, trigger strategies, the discount factor and what it really represents &mdash; carry on to <a href="equilibria.html">Equilibria</a>. For a deeper case study of where these dynamics show up outside the lab &mdash; in arms races, climate negotiations, OPEC, prison-cell informants &mdash; see <a href="applications.html">Applications</a>.
+      </p>
+      <p style="margin-top:var(--s-5);">
+        <a class="btn" href="equilibria.html">Continue to Equilibria <span class="arrow">&rarr;</span></a>
+      </p>
+    </div>
+
+    <aside class="sidenote" style="margin-top:var(--s-7);">
+      <span class="marker">¶</span>
+      <strong>Extending the simulator.</strong> Every strategy is a pure function from history to a move. Open the console and call
+      <code>GT.simulator.registerStrategy({ id:'mine', name:'Mine', short:'MINE', blurb:'…', decide: c =&gt; c.round &lt; 5 ? 'C' : 'D' })</code> &mdash;
+      reload the page logic and your strategy joins the round-robin. The full signature is documented at the top of <code>simulator.js</code>.
+    </aside>
+  </section>
+
+</main>
+
+<!-- ============================================================
+     COLOPHON / FOOTER
+     ============================================================ -->
+<footer class="colophon" role="contentinfo">
+  <div class="wrap">
+    <div class="colophon-grid">
+      <div>
+        <h5>The Publication</h5>
+        <p style="max-width:34em;">
+          <em>Game Theory &amp; Co.</em> is an open-source field guide to strategic decision-making, hand-set in Fraunces and Source Serif. Built as a static site &mdash; no trackers, no analytics, no nonsense.
+        </p>
+      </div>
+      <div>
+        <h5>Sections</h5>
+        <ul>
+          <li><a href="foundations.html">Foundations</a></li>
+          <li><a href="equilibria.html">Equilibria</a></li>
+          <li><a href="applications.html">Applications</a></li>
+          <li><a href="simulator.html">Simulator</a></li>
+        </ul>
+      </div>
+      <div>
+        <h5>Source</h5>
+        <ul>
+          <li><a href="#" rel="noopener">GitHub repository</a></li>
+          <li><a href="#" rel="noopener">Report an issue</a></li>
+          <li><a href="#" rel="noopener">Contribute</a></li>
+        </ul>
+      </div>
+      <div>
+        <h5>Further Reading</h5>
+        <ul>
+          <li>von Neumann &amp; Morgenstern (1944)</li>
+          <li>Schelling, <em>Strategy of Conflict</em> (1960)</li>
+          <li>Axelrod, <em>Evolution of Cooperation</em> (1984)</li>
+        </ul>
+      </div>
+    </div>
+    <div class="colophon-meta">
+      <span>&copy; <span data-year>2026</span> Game Theory &amp; Co. &mdash; MIT License.</span>
+      <span class="seal">&#x2767; fin &#x2767;</span>
+      <span>Set in Fraunces, Source Serif 4, JetBrains Mono.</span>
+    </div>
+  </div>
+</footer>
+
+</body>
+</html>

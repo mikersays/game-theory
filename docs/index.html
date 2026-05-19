@@ -1,0 +1,397 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Game Theory &amp; Co. — The Mathematics of Decision</title>
+  <meta name="description" content="An editorial field guide to game theory: how rational agents make decisions when outcomes depend on others' choices. Foundations, equilibria, applications, and a Prisoner's Dilemma simulator." />
+  <meta name="theme-color" content="#f4ecd8" />
+
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght,SOFT@0,9..144,300..700,0..100;1,9..144,300..700,0..100&family=Source+Serif+4:ital,opsz,wght@0,8..60,300..700;1,8..60,300..700&family=JetBrains+Mono:wght@400;600&family=IBM+Plex+Sans:wght@400;500;600&display=swap" rel="stylesheet" />
+
+  <link rel="stylesheet" href="assets/css/main.css" />
+  <script defer src="assets/js/main.js"></script>
+</head>
+<body>
+
+<!-- ============================================================
+     MASTHEAD
+     ============================================================ -->
+<header class="masthead" role="banner">
+  <div class="wrap masthead-inner">
+    <a href="index.html" class="brand" aria-label="Game Theory &amp; Co. — home">
+      Game Theory <span class="amp">&amp;</span> Co.
+      <small>Vol. I · A Field Guide</small>
+    </a>
+    <nav class="primary" aria-label="Primary">
+      <a href="index.html">Home</a>
+      <a href="foundations.html">Foundations</a>
+      <a href="equilibria.html">Equilibria</a>
+      <a href="applications.html">Applications</a>
+      <a href="simulator.html">Simulator</a>
+    </nav>
+    <div class="issue-meta" aria-hidden="true">
+      Est. MMXXVI &middot; <span data-year>2026</span>
+    </div>
+    <button class="nav-toggle" aria-expanded="false" aria-controls="primary-nav">Menu</button>
+  </div>
+</header>
+
+<main id="main">
+
+  <!-- ============================================================
+       HERO
+       ============================================================ -->
+  <section class="hero wrap" aria-labelledby="hero-title">
+    <div class="hero-grid">
+      <span class="eyebrow">No. 01 &middot; Introduction</span>
+      <h1 id="hero-title" class="hero-title reveal in">
+        The arithmetic of <span class="accent">other people&rsquo;s</span> minds<span class="ornament">.</span>
+      </h1>
+      <div class="hero-rule" aria-hidden="true"></div>
+      <p class="lede reveal in">
+        Game theory is the mathematics of how rational agents make decisions when outcomes depend on the choices of others. It is the study of strategy where there is no &ldquo;right&rdquo; answer in isolation &mdash; only answers conditional on what the rest of the room will do.
+      </p>
+      <div class="hero-meta">
+        <span>Subject &mdash; <strong>Strategic decision-making</strong></span>
+        <span>Founded &mdash; <strong>1944, Princeton</strong></span>
+        <span>Authors &mdash; <strong>von Neumann · Morgenstern · Nash · Schelling</strong></span>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============================================================
+       PROLOGUE — narrative
+       ============================================================ -->
+  <section class="wrap">
+    <div class="section-head">
+      <div>
+        <span class="eyebrow">Prologue</span>
+        <h2>A short field briefing.</h2>
+      </div>
+      <span class="roman" aria-hidden="true">I.</span>
+    </div>
+
+    <div class="wrap-narrow" style="margin-inline:0;">
+      <p class="dropcap">
+        Most of what we call &ldquo;strategy&rdquo; &mdash; in business, war, romance, politics, evolution &mdash; is really one problem in different costumes: <em>how should I act when the outcome of my action depends on what someone else, also reasoning, decides to do?</em> A chess player has it. A central banker has it. So does the bacterium choosing whether to spend energy on a virulence gene.
+      </p>
+      <p>
+        In 1944, the polymath <strong>John von Neumann</strong> and the economist <strong>Oskar Morgenstern</strong> published <em>Theory of Games and Economic Behavior</em> and gave the problem its modern language: <em>players</em>, <em>strategies</em>, <em>payoffs</em>, <em>equilibrium</em>. Six years later, a 22-year-old <strong>John Nash</strong> proved that under mild conditions every finite game has at least one configuration in which no player can do better by unilaterally changing their mind. We have been chasing the implications ever since.
+      </p>
+      <p>
+        Game theory will not tell you what to <em>want</em>. It assumes you already know that &mdash; your preferences, your <em>utility</em>. What it does, with merciless economy, is tell you what a clear-eyed opponent who also knows your preferences will do, and therefore what you ought to do in reply. Sometimes the answer is uncomfortable. Sometimes it is that two intelligent people, each acting perfectly rationally, will produce an outcome both consider worse than another they could have agreed to. That is not a bug. It is, often, the point.
+      </p>
+      <aside class="sidenote">
+        <span class="marker">¶</span> Thomas Schelling, whose <em>The Strategy of Conflict</em> (1960) turned game theory toward the Cold War, liked to remind students that &ldquo;one cannot, without empirical evidence, deduce what understandings can be perceived in a non-zero-sum game of maneuver.&rdquo; In other words: the math gives you a frame. People still have to live inside it.
+      </aside>
+    </div>
+  </section>
+
+  <!-- ============================================================
+       FEATURED GAMES
+       ============================================================ -->
+  <section class="wrap reveal" aria-labelledby="games-h">
+    <div class="section-head">
+      <div>
+        <span class="eyebrow">Specimens</span>
+        <h2 id="games-h">Four games that explain the world.</h2>
+      </div>
+      <span class="roman" aria-hidden="true">II.</span>
+    </div>
+
+    <p style="max-width:38em;">
+      A handful of small, abstract games keep recurring &mdash; in arms races, in office politics, in mating displays. Each one is a different shape of incentive. Learn the shapes and you start to see them everywhere.
+    </p>
+
+    <div class="games-grid">
+
+      <!-- Prisoner's Dilemma -->
+      <article class="game-card">
+        <span class="game-num">Game No. 01</span>
+        <h3>Prisoner&rsquo;s Dilemma</h3>
+        <p>Each player gains by defecting whatever the other does &mdash; yet both are worse off when both defect. Cooperation is collectively rational, individually unstable.</p>
+        <div class="payoff" data-payoff='{
+          "rowLabel":"You","colLabel":"Them",
+          "rowStrats":["Cooperate","Defect"],
+          "colStrats":["Cooperate","Defect"],
+          "cells":[[[3,3],[0,5]],[[5,0],[1,1]]],
+          "equilibria":[[1,1]],
+          "legend":false
+        }'></div>
+        <a class="game-link" href="foundations.html#prisoners-dilemma">Read the analysis &rarr;</a>
+      </article>
+
+      <!-- Stag Hunt -->
+      <article class="game-card">
+        <span class="game-num">Game No. 02</span>
+        <h3>Stag Hunt</h3>
+        <p>Two hunters can bag a stag together or a hare alone. The stag is better &mdash; if you trust your partner. A parable of social contracts and risk-dominance.</p>
+        <div class="payoff" data-payoff='{
+          "rowLabel":"You","colLabel":"Partner",
+          "rowStrats":["Stag","Hare"],
+          "colStrats":["Stag","Hare"],
+          "cells":[[[4,4],[0,2]],[[2,0],[2,2]]],
+          "equilibria":[[0,0],[1,1]],
+          "legend":false
+        }'></div>
+        <a class="game-link" href="foundations.html#stag-hunt">Read the analysis &rarr;</a>
+      </article>
+
+      <!-- Chicken -->
+      <article class="game-card">
+        <span class="game-num">Game No. 03</span>
+        <h3>Chicken (Hawk-Dove)</h3>
+        <p>Two players race toward collision; whoever swerves loses face. Mutual swerve is mediocre, mutual crash is catastrophe. The art is to credibly remove your own steering wheel.</p>
+        <div class="payoff" data-payoff='{
+          "rowLabel":"Driver A","colLabel":"Driver B",
+          "rowStrats":["Swerve","Straight"],
+          "colStrats":["Swerve","Straight"],
+          "cells":[[[0,0],[-1,1]],[[1,-1],[-10,-10]]],
+          "equilibria":[[0,1],[1,0]],
+          "legend":false
+        }'></div>
+        <a class="game-link" href="foundations.html#chicken">Read the analysis &rarr;</a>
+      </article>
+
+      <!-- Battle of the Sexes -->
+      <article class="game-card">
+        <span class="game-num">Game No. 04</span>
+        <h3>Coordination &amp; Battle of the Sexes</h3>
+        <p>Both players want to meet, but each prefers a different venue. The hardest part of cooperation is sometimes not <em>whether</em> to coordinate but <em>on which</em> equilibrium to settle.</p>
+        <div class="payoff" data-payoff='{
+          "rowLabel":"Alex","colLabel":"Sam",
+          "rowStrats":["Opera","Boxing"],
+          "colStrats":["Opera","Boxing"],
+          "cells":[[[3,2],[0,0]],[[1,1],[2,3]]],
+          "equilibria":[[0,0],[1,1]],
+          "legend":false
+        }'></div>
+        <a class="game-link" href="foundations.html#battle-of-the-sexes">Read the analysis &rarr;</a>
+      </article>
+
+    </div>
+
+    <div class="ornament-divider" aria-hidden="true">&sect; &sect; &sect;</div>
+  </section>
+
+  <!-- ============================================================
+       APPLICATIONS / WHERE IT SHOWS UP
+       ============================================================ -->
+  <section class="wrap reveal" aria-labelledby="apps-h">
+    <div class="section-head">
+      <div>
+        <span class="eyebrow">In the wild</span>
+        <h2 id="apps-h">Where it actually shows up.</h2>
+      </div>
+      <span class="roman" aria-hidden="true">III.</span>
+    </div>
+
+    <p style="max-width:40em;">
+      Game theory is rarely the headline. It is the grammar underneath the headline &mdash; the reason the spectrum auction raised $20 billion, why your airline ticket is priced the way it is, why two peacocks waste energy on tail feathers, why the climate negotiation keeps stalling at the same impasse.
+    </p>
+
+    <div class="applications">
+      <div class="app-item">
+        <h4>Pricing &amp; Auctions</h4>
+        <p>Vickrey, English, Dutch, sealed-bid. The FCC&rsquo;s 1994 spectrum auction was designed by economists who had read Vickrey &mdash; and it printed money.</p>
+      </div>
+      <div class="app-item">
+        <h4>Antitrust &amp; Cartels</h4>
+        <p>OPEC, airlines, the lysine cartel. Every long-running price-fix is a repeated Prisoner&rsquo;s Dilemma where defection is one phone call away.</p>
+      </div>
+      <div class="app-item">
+        <h4>Evolutionary Biology</h4>
+        <p>Maynard Smith&rsquo;s <em>evolutionary stable strategies</em> explain hawks and doves, sex ratios, and why most species don&rsquo;t kill rivals outright.</p>
+      </div>
+      <div class="app-item">
+        <h4>Climate &amp; Public Goods</h4>
+        <p>Every emissions treaty is a Stag Hunt at planetary scale. The math is friendly. The credible commitments are hard.</p>
+      </div>
+      <div class="app-item">
+        <h4>Politics &amp; Voting</h4>
+        <p>Arrow&rsquo;s impossibility, median-voter theorems, strategic voting. Why two-party systems converge to the center &mdash; until they don&rsquo;t.</p>
+      </div>
+      <div class="app-item">
+        <h4>AI &amp; Alignment</h4>
+        <p>Multi-agent RL, mechanism design for LLMs, the principal-agent problem reborn as <em>specification gaming</em>.</p>
+      </div>
+      <div class="app-item">
+        <h4>Sports &amp; Mixed Strategies</h4>
+        <p>Penalty kicks, serve-and-return in tennis, play-calling in football. The optimum is almost never predictable.</p>
+      </div>
+      <div class="app-item">
+        <h4>Everyday Life</h4>
+        <p>Splitting rent, choosing a lane, ending a Zoom call, asking for a raise. Most of it is bargaining under incomplete information.</p>
+      </div>
+    </div>
+
+    <p style="margin-top:var(--s-6);">
+      <a class="btn" href="applications.html">The full applications volume <span class="arrow">&rarr;</span></a>
+    </p>
+  </section>
+
+  <!-- ============================================================
+       AXELROD CALLOUT
+       ============================================================ -->
+  <section class="wrap reveal">
+    <div class="section-head">
+      <div>
+        <span class="eyebrow">A famous result</span>
+        <h2>Why nice, forgiving, and provocable wins.</h2>
+      </div>
+      <span class="roman" aria-hidden="true">IV.</span>
+    </div>
+
+    <div class="wrap-narrow" style="margin-inline:0;">
+      <p>
+        In 1980, the political scientist <strong>Robert Axelrod</strong> ran a tournament. He invited researchers to submit computer programs to play 200 rounds of the iterated Prisoner&rsquo;s Dilemma against every other entry. The winner, submitted by Anatol Rapoport, was almost embarrassingly short: <em>cooperate on the first move; afterward, do whatever the opponent did last move</em>. Four lines of BASIC. It is called <strong>Tit-for-Tat</strong>.
+      </p>
+      <p>
+        Axelrod ran the tournament again, with the strategies known. Tit-for-Tat won the second one too. From the results he extracted a moral that has aged remarkably well: successful strategies are <em>nice</em> (they never defect first), <em>retaliatory</em> (they never let a defection slide), <em>forgiving</em> (they don&rsquo;t hold grudges), and <em>clear</em> (the opponent can tell what you&rsquo;re doing).
+      </p>
+
+      <div class="callout">
+        <h4>The Axelrod conditions for cooperation</h4>
+        <p>Cooperation can emerge in a population of self-interested agents if (a) interactions are repeated, (b) the future is sufficiently weighted against the present, and (c) players can recognize each other across encounters. Strip any one of these away and you tend to get the depressing equilibrium back.</p>
+      </div>
+
+      <blockquote>
+        &ldquo;The Tit-for-Tat strategy demonstrates that there is a single rule which, although simple, is surprisingly robust across a wide variety of strategic environments.&rdquo;
+        <cite>Robert Axelrod, <em>The Evolution of Cooperation</em>, 1984</cite>
+      </blockquote>
+    </div>
+  </section>
+
+  <!-- ============================================================
+       SIMULATOR CTA
+       ============================================================ -->
+  <section class="wrap">
+    <div class="sim-cta">
+      <div class="sim-cta-grid">
+        <div>
+          <span class="eyebrow">Hands on</span>
+          <h2>Run the tournament yourself.</h2>
+          <p>
+            Pick a strategy &mdash; Always Cooperate, Always Defect, Tit-for-Tat, Grim Trigger, Pavlov, Random &mdash; and watch it play hundreds of rounds against every other strategy in the field. See for yourself why nice and provocable beats clever and cruel.
+          </p>
+          <a class="btn btn-primary" href="simulator.html">Open the simulator <span class="arrow">&rarr;</span></a>
+        </div>
+        <div aria-hidden="true">
+          <!-- Schematic SVG: nodes connected, like an Axelrod round-robin -->
+          <svg viewBox="0 0 300 240" width="100%" role="img" aria-label="Strategy round-robin diagram">
+            <defs>
+              <pattern id="dots" width="14" height="14" patternUnits="userSpaceOnUse">
+                <circle cx="2" cy="2" r="0.7" fill="rgba(244,236,216,0.18)"/>
+              </pattern>
+            </defs>
+            <rect width="300" height="240" fill="url(#dots)"/>
+            <g stroke="rgba(244,236,216,0.45)" stroke-width="1" fill="none">
+              <line x1="60" y1="60" x2="240" y2="60"/>
+              <line x1="60" y1="60" x2="150" y2="200"/>
+              <line x1="60" y1="60" x2="240" y2="180"/>
+              <line x1="240" y1="60" x2="150" y2="200"/>
+              <line x1="240" y1="60" x2="60" y2="180"/>
+              <line x1="240" y1="60" x2="240" y2="180"/>
+              <line x1="60" y1="180" x2="240" y2="180"/>
+              <line x1="60" y1="180" x2="150" y2="200"/>
+              <line x1="150" y1="200" x2="240" y2="180"/>
+            </g>
+            <g font-family="JetBrains Mono, monospace" font-size="10" fill="#f4ecd8">
+              <g><circle cx="60"  cy="60"  r="18" fill="#7a1f1f" stroke="#f4ecd8" stroke-width="1.5"/><text x="60" y="64" text-anchor="middle">TFT</text></g>
+              <g><circle cx="240" cy="60"  r="18" fill="#1f3a5f" stroke="#f4ecd8" stroke-width="1.5"/><text x="240" y="64" text-anchor="middle">ALLD</text></g>
+              <g><circle cx="60"  cy="180" r="18" fill="#1f3a5f" stroke="#f4ecd8" stroke-width="1.5"/><text x="60" y="184" text-anchor="middle">PAV</text></g>
+              <g><circle cx="240" cy="180" r="18" fill="#1f3a5f" stroke="#f4ecd8" stroke-width="1.5"/><text x="240" y="184" text-anchor="middle">GRIM</text></g>
+              <g><circle cx="150" cy="200" r="18" fill="#7a1f1f" stroke="#f4ecd8" stroke-width="1.5"/><text x="150" y="204" text-anchor="middle">ALLC</text></g>
+            </g>
+            <text x="150" y="30" text-anchor="middle" font-family="Fraunces, serif" font-style="italic" font-size="13" fill="#e9d27a">round-robin · n=5</text>
+          </svg>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============================================================
+       NEXT STEPS
+       ============================================================ -->
+  <section class="wrap" aria-labelledby="next-h">
+    <div class="section-head">
+      <div>
+        <span class="eyebrow">Continue reading</span>
+        <h2 id="next-h">Where to go next.</h2>
+      </div>
+      <span class="roman" aria-hidden="true">V.</span>
+    </div>
+
+    <div class="applications" style="margin-top:var(--s-4);">
+      <div class="app-item">
+        <h4><a href="foundations.html">Foundations</a></h4>
+        <p>Players, strategies, payoffs, information, rationality &mdash; and the six classic games every strategist should know cold.</p>
+      </div>
+      <div class="app-item">
+        <h4><a href="equilibria.html">Equilibria</a></h4>
+        <p>Nash, dominance, mixed strategies, subgame perfection, ESS, and what makes Tit-for-Tat hold up under fire.</p>
+      </div>
+      <div class="app-item">
+        <h4><a href="applications.html">Applications</a></h4>
+        <p>Business, auctions, politics, biology, AI alignment &mdash; the math, applied without apology.</p>
+      </div>
+      <div class="app-item">
+        <h4><a href="simulator.html">Simulator</a></h4>
+        <p>An interactive Axelrod-style tournament you can run in your browser. No installs.</p>
+      </div>
+    </div>
+  </section>
+
+</main>
+
+<!-- ============================================================
+     COLOPHON / FOOTER
+     ============================================================ -->
+<footer class="colophon" role="contentinfo">
+  <div class="wrap">
+    <div class="colophon-grid">
+      <div>
+        <h5>The Publication</h5>
+        <p style="max-width:34em;">
+          <em>Game Theory &amp; Co.</em> is an open-source field guide to strategic decision-making, hand-set in Fraunces and Source Serif. Built as a static site &mdash; no trackers, no analytics, no nonsense.
+        </p>
+      </div>
+      <div>
+        <h5>Sections</h5>
+        <ul>
+          <li><a href="foundations.html">Foundations</a></li>
+          <li><a href="equilibria.html">Equilibria</a></li>
+          <li><a href="applications.html">Applications</a></li>
+          <li><a href="simulator.html">Simulator</a></li>
+        </ul>
+      </div>
+      <div>
+        <h5>Source</h5>
+        <ul>
+          <li><a href="#" rel="noopener">GitHub repository</a></li>
+          <li><a href="#" rel="noopener">Report an issue</a></li>
+          <li><a href="#" rel="noopener">Contribute</a></li>
+        </ul>
+      </div>
+      <div>
+        <h5>Further Reading</h5>
+        <ul>
+          <li>von Neumann &amp; Morgenstern (1944)</li>
+          <li>Schelling, <em>Strategy of Conflict</em> (1960)</li>
+          <li>Axelrod, <em>Evolution of Cooperation</em> (1984)</li>
+        </ul>
+      </div>
+    </div>
+    <div class="colophon-meta">
+      <span>&copy; <span data-year>2026</span> Game Theory &amp; Co. &mdash; MIT License.</span>
+      <span class="seal">&#x2767; fin &#x2767;</span>
+      <span>Set in Fraunces, Source Serif 4, JetBrains Mono.</span>
+    </div>
+  </div>
+</footer>
+
+</body>
+</html>
