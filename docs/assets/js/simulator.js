@@ -394,7 +394,7 @@
   }
   function readSeed() {
     var v = $('#seed').value.trim();
-    if (!v) return strSeed('axelrod-1980');
+    if (!v) return (Math.random() * 0xFFFFFFFF) >>> 0;
     var asNum = parseInt(v, 10);
     if (isFinite(asNum) && String(asNum) === v) return asNum >>> 0;
     return strSeed(v);
